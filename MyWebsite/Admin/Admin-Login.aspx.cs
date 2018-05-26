@@ -8,41 +8,41 @@ using System.Data;
 using System.Data.SqlClient;
 
 
-public partial class Admin_Admin_Login : System.Web.UI.Page
+public partial class AdminAdminLogin : System.Web.UI.Page
 {
-    SqlConnection con = new SqlConnection (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\muham\source\repos\MyWebsite\MyWebsite\App_Data\ShoppingDatabase.mdf;Integrated Security=True");
-    private int counter;
+    SqlCommand _cmd = new SqlCommand();
+    SqlConnection _conn = new SqlConnection();
+    SqlDataAdapter _sda = new SqlDataAdapter();
+    DataSet _dataSet = new DataSet();
+    
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        _conn.ConnectionString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\muham\source\repos\MyWebsite\MyWebsite\App_Data\ecommerce_data.mdf;Integrated Security=True";
+        _conn.Open();
     }
 
     protected void b1_Click(object sender, EventArgs e)
     {
-        counter = 0;
-        con.Open();
-        SqlCommand cmd = con.CreateCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select * from valid";
-        cmd.CommandText = " where username='" +t1.Text+"'and password='"+t2.Text+"'";
+     
         
-        cmd.ExecuteNonQuery();
-       
-        DataTable datatable = new DataTable();
-        SqlDataAdapter dataadptr =new SqlDataAdapter();
-        dataadptr.Fill(datatable);
-        counter = Convert.ToInt32(datatable.Rows.Count.ToString());
+        SqlCommand cmd = _conn.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select *from validation where username='" + t1.Text + "' and password='" + t2.Text + "'";
 
-        if (counter == 1)
+        cmd.Connection = _conn;
+        _sda.SelectCommand = cmd;
+        _sda.Fill(_dataSet, "auth");
+        if (_dataSet.Tables[0].Rows.Count > 0)
         {
-            Response.Redirect("tester.aspx");
+            Response.Redirect("addproduct.aspx");
         }
         else
         {
-            lb1.Text = "Soryy Wrong UserName or Password ";
+            Response.Redirect("Admin-Login.aspx");
         }
 
-        con.Close();
+        _conn.Close();
 
     }
 }

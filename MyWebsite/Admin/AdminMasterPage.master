@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminMasterPage.master.cs" Inherits="Admin_AdminMasterPage" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminMasterPage.master.cs" Inherits="AdminAdminMasterPage" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,7 +36,7 @@
 				</div>
 			  
 				<span class="logout-spn" >
-				  <a href="#" style="color:#fff;">LOGOUT</a>  
+				  <a href="../User/display_items.aspx" style="color:#fff;">LOGOUT</a>  
 
 				</span>
 			</div>

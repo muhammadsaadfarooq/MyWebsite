@@ -8,28 +8,28 @@ using System.Web.UI.WebControls;
 using System.Data.SqlClient;
 
 
-public partial class User_display_items : System.Web.UI.Page
+public partial class UserDisplayItems : System.Web.UI.Page
 {
-    SqlCommand cmd = new SqlCommand();
-    SqlConnection conn = new SqlConnection();
+    SqlCommand _cmd = new SqlCommand();
+    SqlConnection _conn = new SqlConnection();
    
     protected void Page_Load(object sender, EventArgs e)
     {
-        conn.ConnectionString =
+        _conn.ConnectionString =
             @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\muham\source\repos\MyWebsite\MyWebsite\App_Data\ecommerce_data.mdf;Integrated Security=True";
-        conn.Open();
-        cmd = conn.CreateCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.CommandText = "select *from add_product ";
-        cmd.ExecuteNonQuery();
-        DataTable dat_tble =new DataTable();
-        SqlDataAdapter sda = new SqlDataAdapter(cmd);
-        sda.Fill(dat_tble);
-        rept.DataSource = dat_tble;
+        _conn.Open();
+        _cmd = _conn.CreateCommand();
+        _cmd.CommandType = CommandType.Text;
+        _cmd.CommandText = "select *from add_product ";
+        _cmd.ExecuteNonQuery();
+        DataTable datTble =new DataTable();
+        SqlDataAdapter sda = new SqlDataAdapter(_cmd);
+        sda.Fill(datTble);
+        rept.DataSource = datTble;
         rept.DataBind();
       
 
-        conn.Close();
+        _conn.Close();
 
     }
 }

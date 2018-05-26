@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Admin-Login.aspx.cs" Inherits="Admin_Admin_Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Admin-Login.aspx.cs" Inherits="AdminAdminLogin" %>
 
 
 <!DOCTYPE html>
