@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
 
 public partial class UserUserMasterPage : System.Web.UI.MasterPage
 {
@@ -12,10 +14,37 @@ public partial class UserUserMasterPage : System.Web.UI.MasterPage
     private int total_price1 = 0;
     private string[] _dataStore = new string[6];
     private int count_qty = 0;
+    SqlCommand cmd = new SqlCommand();
+    SqlConnection conn = new SqlConnection();
+    SqlCommand cmd1 = new SqlCommand();
+
 
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
+
+        conn.ConnectionString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\muham\source\repos\MyWebsite\MyWebsite\App_Data\ecommerce_data.mdf;Integrated Security=True";
+        conn.Open();
+        cmd = conn.CreateCommand();
+        cmd.CommandType = CommandType.Text;
+        cmd.CommandText = "select *from product_catagory";
+        cmd.ExecuteNonQuery();
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter(cmd);
+        da.Fill(dt);
+        cat.DataSource = dt;
+        cat.DataBind();
+
+
+
+
+
+
+
+
+
         if (Request.Cookies["aa"] != null)
         {
             temp_data = Convert.ToString(Request.Cookies["aa"].Value);

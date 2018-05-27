@@ -12,7 +12,7 @@ public partial class UserDisplayItems : System.Web.UI.Page
 {
     SqlCommand _cmd = new SqlCommand();
     SqlConnection _conn = new SqlConnection();
-   
+
     protected void Page_Load(object sender, EventArgs e)
     {
         _conn.ConnectionString =
@@ -20,16 +20,32 @@ public partial class UserDisplayItems : System.Web.UI.Page
         _conn.Open();
         _cmd = _conn.CreateCommand();
         _cmd.CommandType = CommandType.Text;
-        _cmd.CommandText = "select *from add_product ";
-        _cmd.ExecuteNonQuery();
-        DataTable datTble =new DataTable();
-        SqlDataAdapter sda = new SqlDataAdapter(_cmd);
-        sda.Fill(datTble);
-        rept.DataSource = datTble;
-        rept.DataBind();
-      
+        if (Request.QueryString["cat"] == null)
+        {
+            _cmd.CommandText = "select *from add_product";
+        }
+        else
+        {
+            _cmd.CommandText = "select *from add_product where pro_cat= '" + Request.QueryString["cat"].ToString() +
+                               "'";
 
-        _conn.Close();
+        }
 
+        if (Request.QueryString["cat"] == null && Request.QueryString["search"] != null)
+        {
+            _cmd.CommandText = "select *from add_product where pro_name like ('%"+ Request.QueryString["search"] + "%')";
+        }
+
+
+            _cmd.ExecuteNonQuery();
+            DataTable datTble = new DataTable();
+            SqlDataAdapter sda = new SqlDataAdapter(_cmd);
+            sda.Fill(datTble);
+            rept.DataSource = datTble;
+            rept.DataBind();
+
+
+            _conn.Close();
+
+        }
     }
-}

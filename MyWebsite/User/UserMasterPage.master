@@ -28,7 +28,24 @@
       <ul>
         <li><a href="display_items.aspx" class="active">Home</a></li>
         <li><a href="#">Support</a></li>
-        <li><a href="../Admin/Admin-Login.aspx">My Account</a></li>
+         
+          <% if (Session["log"] == null)
+              {
+              %> <li><a href="user_login.aspx">Login</a></li> <%
+
+              }
+          %>
+          <% else
+             {
+          %> <li><a href="logout.aspx">LogOut</a></li> <%
+
+
+              }
+                                               %>
+
+        
+          
+
         <li><a href="display_items.aspx">The Store</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
@@ -68,6 +85,12 @@
       <div class="box search">
         <h2>Search by <span></span></h2>
         <div class="box-content">
+            <br/>
+            <label> Product Name</label>
+            <input type="text" class="field" id="search_box" />
+            <input type="button" class="search-submit" value="Search" onclick="search();" />
+            
+
          
         </div>
       </div>
@@ -76,10 +99,14 @@
       <div class="box categories">
         <h2>Categories <span></span></h2>
         <div class="box-content">
+            
+
           <ul>
-            <li><a href="#">Category 1</a></li>
-            <li><a href="#">Category 2</a></li>
-            <li class="last"><a href="#">Category 3</a></li>
+            <asp:DataList ID="cat" runat="server">
+                <ItemTemplate>
+            <li ><a href="display_items.aspx?cat=<%#Eval("product_cat") %>"> <%#Eval("product_cat") %></a></li>
+                </ItemTemplate>
+            </asp:DataList>
 
           </ul>
         </div>
@@ -159,5 +186,13 @@
 </div>
 <!-- End Shell -->
 </form>
+
+<script type="text/javascript">
+    function search() {
+
+        window.location = "display_items.aspx?search=" + document.getElementById("search_box").value;
+    }
+
+</script>
 </body>
 </html>
